@@ -9,9 +9,10 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn add prisma -D
+RUN yarn add -D prisma
 RUN yarn prisma generate
 
 EXPOSE 5000
 
 CMD ["yarn", "start"]
+as

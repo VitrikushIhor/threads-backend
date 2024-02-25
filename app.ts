@@ -22,6 +22,25 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
+
+const {PrismaClient} = require('@prisma/client');
+
+const prisma = new PrismaClient();
+
+async function connectToDatabase() {
+	try {
+		await prisma.$connect();
+		console.log('Connected to Prisma Client');
+	} catch (error) {
+		console.error('Error connecting to Prisma Client:', error);
+		// Повторна спроба підключитися через певний час
+		setTimeout(connectToDatabase, 5000);
+	}
+}
+
+connectToDatabase();
+
+
 // routes
 app.use(userRouter)
 app.use(postRouter)
